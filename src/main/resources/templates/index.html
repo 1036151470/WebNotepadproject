@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <link rel="stylesheet" href="pintuer.css">
+    <script src="jquery.js"></script>
+    <script src="pintuer.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    function getfiles() {
+
+        var getfilesstr = $("#files").val();
+        return getfilesstr;
+    }
+
+    function donefiles() {
+        $.ajax({
+            url: "/intofile",
+            type: "post",
+            data: {files: getfiles()},
+            async: true,
+            beforeSend: function () {
+
+            },
+            success: function (data) {
+                if (data != undefined) {
+                    var obj =  jQuery.parseJSON(data)
+                    $("#pojoname").html('文件名：'+obj.name);
+                    $("#pojoaddress").html('文件路径：'+obj.address);
+                    $("#pojosize").html('文件大小：'+obj.size);
+                    $("#jsabsoluteFile").attr("value",obj.absoluteFile)
+                    $("#pojocontext").val(obj.context)
+                }
+            }
+        });
+    }
+    
+    function savecontext() {
+        $("#savefile").submit();
+    }
+
+</script>
+
+<div id="mydialog">
+    <div class="dialog fadein">
+        <div class="dialog-head">
+            <span class="close rotate-hover"></span><strong>打开文件-标题-</strong>
+        </div>
+        <div class="dialog-body">
+            <form id="formfiles">
+                <div class="form-group">
+                    <div class="label">
+                        <label for="files">
+                            文件: </label>
+                    </div>
+                    <div class="field">
+                        <input type="text" class="input" id="files" name="files" size="30"/>
+                    </div>
+                </div>
+                <div style="text-align: right">
+                    <button type="button" class="button dialog-close" onclick="donefiles()">确认</button>
+                    <button class="button dialog-close">取消</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <button class="button icon-navicon" data-target="#nav-link5"></button>
+    <ul class="alert box-shadow-big nav nav-menu nav-inline nav-split nav-justified nav-navicon" id="nav-link5">
+        <li>
+            <button class="button bg radius-rounded dialogs" data-toggle="click" data-target="#mydialog" data-mask="1"
+                    data-width="50%">打开文件
+            </button>
+        </li>
+        <li>
+            <button class="button bg radius-rounded" onclick="savecontext()">保存</button>
+        </li>
+        <li>
+           <a href="/"><button class="button bg radius-rounded">关闭文件</button></a>
+        </li>
+        <li class="active">
+            <a href="/exit"><button class="button bg radius-rounded">退出程序</button></a>
+        </li>
+    </ul>
+</div>
+
+<br><br>
+
+
+<div class="container">
+    <div class="line-big">
+
+        <div class="x3">
+
+            <div class="alert box-shadow-big">
+                <div class="text-center">
+                    <img src="pics.gif" width="128" height="128" class="radius-circle"/>
+                </div>
+                <br>
+                <p class="badge bg-sub" id="pojoname">文件名：</p>
+                <br>
+                <p class="badge bg-sub" id="pojoaddress">文件路径：</p>
+                <br>
+                <p class="badge bg-sub" id="pojosize">文件大小：</p>
+                <br>
+                <br><br><br><br><br><br><br>
+
+            </div>
+        </div>
+
+        <div class="x9">
+            <div class="alert box-shadow-big">
+                <form id="savefile" action="/savefile" method="post">
+                    <input type="text" id="jsabsoluteFile" name="absoluteFile" class="input radius-none" placeholder="地址"/>
+                    <textarea rows="21" class="input" name="context" id="pojocontext"></textarea>
+                    <div style="text-align: right">
+                        <button class="button bg-sub radius-rounded"> 保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
