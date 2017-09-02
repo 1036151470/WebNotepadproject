@@ -12,7 +12,7 @@ WebNotepadproject
 本应用类似于远程版的vi编辑器，不同于vi只能编辑本地文件，本应用既可以像vi编辑本地文件，也可以让对方通过远程轻松编辑本机的本地文件。(因为是web应用，所以有着web应用的特性)
 
 ## 快速开始
-* 本程序为maven项目，所有首先需要下载和配置好maven。http://maven.apache.org/download.cgi
+* 本程序为maven项目，所以首先需要下载和配置好maven。http://maven.apache.org/download.cgi
 * 返回本程序项目主页点击右上角按钮进行下载
 * 解压项目
 * 使用命令 mvn clean package构建项目
